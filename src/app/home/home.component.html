@@ -1,0 +1,145 @@
+<section class="pt-5">
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="alert alert-success text-center success_message" role="alert">
+          <h4>Success add note</h4>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-sm-3 offset-sm-9">
+        <div class="p-3">
+          <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#modal1">Add Note</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 p-5" *ngFor="let note of allNotes">
+        <div class="card p-2">
+          <div class="text-center p-3">
+            <ul class="navbar-nav float-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="fa-solid fa-ellipsis-vertical text-dark fs-4"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item text-primary fs-5" data-bs-toggle="modal" data-bs-target="#modal2"
+                      (click)="edit(note._id)" id="clear">Edit <i class="fa-solid fa-pen-to-square float-end"></i></a>
+                  </li>
+                  <li><a class="dropdown-item text-danger fs-5" data-bs-toggle="modal" data-bs-target="#delete"
+                      (click)="delete(note._id)" id="clear">Delete
+                      <i class="fa-solid fa-trash float-end"></i></a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <div class="card-body ">
+              <h5 class="card-title">{{note.title}}</h5>
+              <p class="card-text">{{note.desc}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Note</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="AddNoteForm" (ngSubmit)="addNote()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Enter title of note" formControlName="title">
+              <div class="alert alert-danger" role="alert"
+                *ngIf="AddNoteForm.controls['title'].touched && AddNoteForm.controls['title'].errors">
+                <p *ngIf="AddNoteForm.controls['title'].errors?.['required']">title is required</p>
+                <p *ngIf="AddNoteForm.controls['title'].errors?.['maxlength']">max length of title is 25 char</p>
+                <p *ngIf="AddNoteForm.controls['title'].errors?.['minlength']">min length of title is 3 char</p>
+              </div>
+            </div>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Enter your note" style="height: 150px"
+                formControlName="desc"></textarea>
+              <label for="floatingTextarea2">Enter your note</label>
+              <div class="alert alert-danger" role="alert"
+                *ngIf="AddNoteForm.controls['desc'].touched && AddNoteForm.controls['desc'].errors">
+                <p *ngIf="AddNoteForm.controls['desc'].errors?.['required']">description is required</p>
+                <p *ngIf="AddNoteForm.controls['desc'].errors?.['minlength']">min length of description is 20 char</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary add" [disabled]="AddNoteForm.invalid">Add</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="delete" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Are you sure ?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-center text-primary">Do you really want to delete ?<br>
+            process cannot be undone</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger delete" (click)="sureDelete()">Delete</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Note</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="EditNoteForm" (ngSubmit)="editNote()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Enter title of note" formControlName="title"
+                id="title">
+              <div class="alert alert-danger" role="alert"
+                *ngIf="EditNoteForm.controls['title'].touched && EditNoteForm.controls['title'].errors">
+                <p *ngIf="EditNoteForm.controls['title'].errors?.['required']">title is required</p>
+                <p *ngIf="EditNoteForm.controls['title'].errors?.['maxlength']">max length of title is 25 char</p>
+                <p *ngIf="EditNoteForm.controls['title'].errors?.['minlength']">min length of title is 3 char</p>
+              </div>
+            </div>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Enter your note" style="height: 150px" formControlName="desc"
+                id="desc"></textarea>
+              <label for="floatingTextarea2">Enter your note</label>
+              <div class="alert alert-danger" role="alert"
+                *ngIf="EditNoteForm.controls['desc'].touched && EditNoteForm.controls['desc'].errors">
+                <p *ngIf="EditNoteForm.controls['desc'].errors?.['required']">description is required</p>
+                <p *ngIf="EditNoteForm.controls['desc'].errors?.['minlength']">min length of description is 20 char</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning edit" [disabled]="EditNoteForm.invalid">Edit</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

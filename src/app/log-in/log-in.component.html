@@ -1,0 +1,27 @@
+<section id="login" class="position-relative">
+  <form class="position-absolute start-50  translate-middle" [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+    <div class="alert alert-danger text-center" *ngIf="$messageError">
+      <h2>{{$messageError}}</h2>
+    </div>
+    <div class="mb-3">
+      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter your email"
+        formControlName="email">
+      <div class="alert alert-danger" role="alert"
+        *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].errors">
+        <p *ngIf="loginForm.controls['email'].errors?.['required']">email is required</p>
+        <p *ngIf="loginForm.controls['email'].errors?.['email']">formate of email is not correct</p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" id="exampleInputpassword1" placeholder="Enter your password"
+        formControlName="password">
+      <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors">
+        <p *ngIf="loginForm.controls['password'].errors?.['required']">password is required</p>
+        <p *ngIf="loginForm.controls['password'].errors?.['pattern']">password should contain lower case character one or more and numbers one or more</p>
+      </div>
+    </div>
+    <div class="mb-3  w-75 mx-auto">
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
+    </div>
+  </form>
+</section>

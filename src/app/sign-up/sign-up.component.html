@@ -1,0 +1,56 @@
+<section id="signup" class="position-relative">
+  <form class="position-absolute start-50  translate-middle" [formGroup]="registerForm" (ngSubmit)="register(registerForm)">
+    <div class="alert alert-danger text-center" *ngIf="$messageError">
+      <h2>{{$messageError}}</h2>
+    </div>
+    <div class="d-flex justify-content-between mb-3">
+      <div class="name">
+        <input type="text" class="form-control " id="exampleInputName1" placeholder="Enter your first name"
+          formControlName="first_name">
+        <div class="alert alert-danger" role="alert"
+          *ngIf="registerForm.controls['first_name'].touched && registerForm.controls['first_name'].errors">
+          <p *ngIf="registerForm.controls['first_name'].errors?.['required']">first name is required</p>
+          <p *ngIf="registerForm.controls['first_name'].errors?.['maxlength']">max length is 10 char</p>
+          <p *ngIf="registerForm.controls['first_name'].errors?.['minlength']">min length is 3 char</p>
+        </div>
+      </div>
+      <div class="name">
+        <input type="text" class="form-control " id="exampleInputName2" placeholder="Enter your last name"
+          formControlName="last_name">
+        <div class="alert alert-danger" role="alert"
+          *ngIf="registerForm.controls['last_name'].touched && registerForm.controls['last_name'].errors">
+          <p *ngIf="registerForm.controls['last_name'].errors?.['required']">last name is required</p>
+          <p *ngIf="registerForm.controls['last_name'].errors?.['maxlength']">max length is 10 char</p>
+          <p *ngIf="registerForm.controls['last_name'].errors?.['minlength']">min length is 3 char</p>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter your email"
+        formControlName="email">
+      <div class="alert alert-danger" role="alert"
+        *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors">
+        <p *ngIf="registerForm.controls['email'].errors?.['required']">email is required</p>
+        <p *ngIf="registerForm.controls['email'].errors?.['email']">formate of email is not correct</p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <input class="form-control" id="exampleInputage1" placeholder="Enter your  age" formControlName="age">
+      <div class="alert alert-danger" role="alert" *ngIf="registerForm.controls['age'].touched && registerForm.controls['age'].errors">
+        <p *ngIf="registerForm.controls['age'].errors?.['required']">age is required</p>
+        <p *ngIf="registerForm.controls['age'].errors?.['min']">min age of user is 10</p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" id="exampleInputpassword1" placeholder="Enter your password"
+        formControlName="password">
+      <div class="alert alert-danger" role="alert" *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].errors">
+        <p *ngIf="registerForm.controls['password'].errors?.['required']">password is required</p>
+        <p *ngIf="registerForm.controls['password'].errors?.['pattern']">password should contain lower case character one or more and numbers one or more</p>
+      </div>
+    </div>
+    <div class="mb-3  w-75 mx-auto">
+      <button type="submit" class="btn btn-secondary w-100" [disabled]="registerForm.invalid">Sign Up</button>
+    </div>
+  </form>
+</section>
